@@ -11,7 +11,7 @@ namespace Cake.Intellisense
             string dllsDirectory = Path.Combine(Directory.GetCurrentDirectory(), "cake-dlls");
 
             // ensures all of the cake dll's are accessible
-            // Process.Start("dotnet", $"publish -o \"{dllsDirectory}\"").WaitForExit();
+            Process.Start("dotnet", $"publish -o \"{dllsDirectory}\"").WaitForExit();
 
             new CakeFileIntellisenseGenerator().GenereteIntellisense(dllsDirectory);
 
