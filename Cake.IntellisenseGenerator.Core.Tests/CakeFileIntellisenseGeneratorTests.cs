@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Cake.Intellisense.Core.Tests
+namespace Cake.IntellisenseGenerator.Core.Tests
 {
     [TestClass]
     public class CakeFileIntellisenseGeneratorTests

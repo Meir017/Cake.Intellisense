@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-namespace Cake.Intellisense.Core
+namespace Cake.IntellisenseGenerator.Core
 {
     public static class Utilities
     {

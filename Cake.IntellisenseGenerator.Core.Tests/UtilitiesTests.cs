@@ -3,13 +3,13 @@ using System;
 using System.Linq;
 using System.Reflection;
 using FluentAssertions;
-using Cake.Common.Tools.MSBuild;
 using System.Collections.Generic;
 using Cake.Core.Annotations;
 using Cake.Core;
 using FluentAssertions.Execution;
+using System.Diagnostics;
 
-namespace Cake.Intellisense.Core.Tests
+namespace Cake.IntellisenseGenerator.Core.Tests
 {
     [TestClass]
     public class UtilitiesTests
@@ -150,7 +150,7 @@ namespace Cake.Intellisense.Core.Tests
         {
             GetParameterRepresentationAssertHelper(
                 method: nameof(GetParameterRepresentationData.MethodWithComplexType),
-                expectedRepresentation: "params Cake.Common.Tools.MSBuild.MSBuildSettings[]");
+                expectedRepresentation: "params System.Diagnostics.ProcessStartInfo[]");
         }
 
         [TestMethod]
@@ -235,7 +235,7 @@ namespace Cake.Intellisense.Core.Tests
     class GetParameterRepresentationData
     {
         public void MethodWithPrimitiveType(out int a, ref char b, out char c, string d, params long[] e) => throw new Exception();
-        public void MethodWithComplexType(params MSBuildSettings[] settings) { }
+        public void MethodWithComplexType(params ProcessStartInfo[] settings) { }
         public void MethodWithGenericType<G>(G[] value) { }
         public void MethodWithGenericOutKeyward<TKey>(out TKey a) => throw new Exception();
         public void MethodWithGenericObject<TKey>(IList<TKey> a) => throw new Exception();

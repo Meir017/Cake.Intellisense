@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cake.Intellisense.Core\Cake.Intellisense.Core.csproj" />
+    <ProjectReference Include="..\Cake.IntellisenseGenerator.Core\Cake.IntellisenseGenerator.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

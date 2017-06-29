@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Cake.Intellisense.Core
+namespace Cake.IntellisenseGenerator.Core
 {
     public class CakeFileConverter
     {

@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <PackageId>Cake.IntellisenseGenerator</PackageId>
+    <Description>A simple library that provides the ability to write cake scripts with complete Intellisense</Description>
+    <Authors>Meir Blachman</Authors>
+    <Version>0.0.1-preview1</Version>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/Meir017/Cake.IntellisenseGenerator</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Meir017/Cake.IntellisenseGenerator</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>cake-build intellisense</PackageTags>
+    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <AssemblyName>Cake.IntellisenseGenerator</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Cake.Core" Version="0.20.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="2.2.0" />
+  </ItemGroup>
+
+</Project>

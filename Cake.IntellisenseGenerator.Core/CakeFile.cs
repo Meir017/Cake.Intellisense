@@ -1,7 +1,7 @@
 ﻿using Cake.Core;
 using System;
 
-namespace Cake.Intellisense
+namespace Cake.IntellisenseGenerator
 {
     public abstract partial class CakeFile
     {
