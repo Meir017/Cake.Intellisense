@@ -1,0 +1,6 @@
+language: csharp
+dotnet: 2.0.0-preview2
+script:
+  - dotnet restore
+  - dotnet build
+  - dotnet test Cake.IntellisenseGenerator.Core.Tests
