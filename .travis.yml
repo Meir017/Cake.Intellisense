@@ -1,5 +1,5 @@
 language: csharp
-dotnet: 2.0.0-preview2
+dotnet: 2.0.0-preview1-005977
 script:
   - dotnet restore
   - dotnet build
