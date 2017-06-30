@@ -94,6 +94,48 @@ namespace Cake.IntellisenseGenerator.Core.Tests
             // assert
             builder.ToString().Should().Be($"{CakeFileIntellisenseGenerator.AliasesModifier}System.Collections.Generic.IDictionary<Tkey, System.Collections.Generic.IList<TValue>> {nameof(AppendPropertySignatureData.ComplexMethodWithoutParameters)}<Tkey, TValue>(){CakeFileIntellisenseGenerator.ThrowNotSupportedExceptionArrowExpression}{Environment.NewLine}");
         }
+
+        [TestMethod]
+        public void AppendMethodSignature_ComplexMethodWithoutParametersWithSingleParameter()
+        {
+            // arrange
+            var builder = new StringBuilder();
+            var method = typeof(AppendPropertySignatureData).GetMethod(nameof(AppendPropertySignatureData.ComplexMethodWithoutParametersWithSingleParameter));
+
+            // act
+            CakeFileIntellisenseGenerator.AppendMethodSignature(builder, method);
+
+            // assert
+            builder.ToString().Should().Be($"{CakeFileIntellisenseGenerator.AliasesModifier}System.Collections.Generic.IDictionary<Tkey, System.Collections.Generic.IList<TValue>> {nameof(AppendPropertySignatureData.ComplexMethodWithoutParametersWithSingleParameter)}<Tkey, TValue>(System.String name){CakeFileIntellisenseGenerator.ThrowNotSupportedExceptionArrowExpression}{Environment.NewLine}");
+        }
+
+        [TestMethod]
+        public void AppendMethodSignature_ComplexMethodWithoutParametersWithMultipleParameters()
+        {
+            // arrange
+            var builder = new StringBuilder();
+            var method = typeof(AppendPropertySignatureData).GetMethod(nameof(AppendPropertySignatureData.ComplexMethodWithoutParametersWithMultipleParameters));
+
+            // act
+            CakeFileIntellisenseGenerator.AppendMethodSignature(builder, method);
+
+            // assert
+            builder.ToString().Should().Be($"{CakeFileIntellisenseGenerator.AliasesModifier}System.Collections.Generic.IDictionary<Tkey, System.Collections.Generic.IList<TValue>> {nameof(AppendPropertySignatureData.ComplexMethodWithoutParametersWithMultipleParameters)}<Tkey, TValue>(System.String name, System.Int32 age){CakeFileIntellisenseGenerator.ThrowNotSupportedExceptionArrowExpression}{Environment.NewLine}");
+        }
+
+        [TestMethod]
+        public void AppendMethodSignature_ComplexMethodWithoutParametersWithMultipleGenericParameters()
+        {
+            // arrange
+            var builder = new StringBuilder();
+            var method = typeof(AppendPropertySignatureData).GetMethod(nameof(AppendPropertySignatureData.ComplexMethodWithoutParametersWithMultipleGenericParameters));
+
+            // act
+            CakeFileIntellisenseGenerator.AppendMethodSignature(builder, method);
+
+            // assert
+            builder.ToString().Should().Be($"{CakeFileIntellisenseGenerator.AliasesModifier}System.Collections.Generic.IDictionary<Tkey, System.Collections.Generic.IList<TValue>> {nameof(AppendPropertySignatureData.ComplexMethodWithoutParametersWithMultipleGenericParameters)}<Tkey, TValue>(Tkey name, TValue age){CakeFileIntellisenseGenerator.ThrowNotSupportedExceptionArrowExpression}{Environment.NewLine}");
+        }
     }
 
     public static class AppendPropertySignatureData
@@ -114,5 +156,14 @@ namespace Cake.IntellisenseGenerator.Core.Tests
 
         [CakeMethodAlias]
         public static IDictionary<Tkey, IList<TValue>> ComplexMethodWithoutParameters<Tkey, TValue>(this ICakeContext context) => throw new Exception();
+
+        [CakeMethodAlias]
+        public static IDictionary<Tkey, IList<TValue>> ComplexMethodWithoutParametersWithSingleParameter<Tkey, TValue>(this ICakeContext context, string name) => throw new Exception();
+
+        [CakeMethodAlias]
+        public static IDictionary<Tkey, IList<TValue>> ComplexMethodWithoutParametersWithMultipleParameters<Tkey, TValue>(this ICakeContext context, string name, int age) => throw new Exception();
+
+        [CakeMethodAlias]
+        public static IDictionary<Tkey, IList<TValue>> ComplexMethodWithoutParametersWithMultipleGenericParameters<Tkey, TValue>(this ICakeContext context, Tkey name, TValue age) => throw new Exception();
     }
 }
