@@ -40,101 +40,143 @@ namespace Cake.IntellisenseGenerator.Core.Tests
         }
 
         [TestMethod]
+        public void AppendMethodSignature_SimpleVoidMethodWithoutParameters()
+        {
+            AppendMethodSignatureAssertHelper(
+                methodName: nameof(AppendPropertySignatureData.SimpleVoidMethodWithoutParameters),
+                expectedReturnTypeRepresentation: "void",
+                expectedArgumentsRepresentation: "()");
+        }
+
+        [TestMethod]
+        public void AppendMethodSignature_SimpleVoidMethodWithSingleParameter()
+        {
+            AppendMethodSignatureAssertHelper(
+                methodName: nameof(AppendPropertySignatureData.SimpleVoidMethodWithSingleParameter),
+                expectedReturnTypeRepresentation: "void",
+                expectedArgumentsRepresentation: "(System.String name)");
+        }
+
+        [TestMethod]
+        public void AppendMethodSignature_SimpleVoidMethodWithMultipleParameters()
+        {
+            AppendMethodSignatureAssertHelper(
+                methodName: nameof(AppendPropertySignatureData.SimpleVoidMethodWithMultipleParameters),
+                expectedReturnTypeRepresentation: "void",
+                expectedArgumentsRepresentation: "(System.String name, System.Int32 age)");
+        }
+
+        [TestMethod]
         public void AppendMethodSignature_SimpleMethodWithoutParameters()
         {
-            // arrange
-            var builder = new StringBuilder();
-            var method = typeof(AppendPropertySignatureData).GetMethod(nameof(AppendPropertySignatureData.SimpleMethodWithoutParameters));
-
-            // act
-            CakeFileIntellisenseGenerator.AppendMethodSignature(builder, method);
-
-            // assert
-            builder.ToString().Should().Be($"{CakeFileIntellisenseGenerator.AliasesModifier}System.Int32 {nameof(AppendPropertySignatureData.SimpleMethodWithoutParameters)}(){CakeFileIntellisenseGenerator.ThrowNotSupportedExceptionArrowExpression}{Environment.NewLine}");
+            AppendMethodSignatureAssertHelper(
+                methodName: nameof(AppendPropertySignatureData.SimpleMethodWithoutParameters),
+                expectedReturnTypeRepresentation: "System.Int32",
+                expectedArgumentsRepresentation: "()");
         }
 
         [TestMethod]
         public void AppendMethodSignature_SimpleMethodWithSingleParameter()
         {
-            // arrange
-            var builder = new StringBuilder();
-            var method = typeof(AppendPropertySignatureData).GetMethod(nameof(AppendPropertySignatureData.SimpleMethodWithSingleParameter));
-
-            // act
-            CakeFileIntellisenseGenerator.AppendMethodSignature(builder, method);
-
-            // assert
-            builder.ToString().Should().Be($"{CakeFileIntellisenseGenerator.AliasesModifier}System.Int32 {nameof(AppendPropertySignatureData.SimpleMethodWithSingleParameter)}(System.String name){CakeFileIntellisenseGenerator.ThrowNotSupportedExceptionArrowExpression}{Environment.NewLine}");
+            AppendMethodSignatureAssertHelper(
+                methodName: nameof(AppendPropertySignatureData.SimpleMethodWithSingleParameter),
+                expectedReturnTypeRepresentation: "System.Int32",
+                expectedArgumentsRepresentation: "(System.String name)");
         }
 
         [TestMethod]
         public void AppendMethodSignature_SimpleMethodWithMultipleParameters()
         {
             // arrange
-            var builder = new StringBuilder();
-            var method = typeof(AppendPropertySignatureData).GetMethod(nameof(AppendPropertySignatureData.SimpleMethodWithMultipleParameters));
-
-            // act
-            CakeFileIntellisenseGenerator.AppendMethodSignature(builder, method);
-
-            // assert
-            builder.ToString().Should().Be($"{CakeFileIntellisenseGenerator.AliasesModifier}System.Int32 {nameof(AppendPropertySignatureData.SimpleMethodWithMultipleParameters)}(System.String name, System.Int32 age){CakeFileIntellisenseGenerator.ThrowNotSupportedExceptionArrowExpression}{Environment.NewLine}");
+            AppendMethodSignatureAssertHelper(
+                methodName: nameof(AppendPropertySignatureData.SimpleMethodWithMultipleParameters),
+                expectedReturnTypeRepresentation: "System.Int32",
+                expectedArgumentsRepresentation: "(System.String name, System.Int32 age)");
         }
 
         [TestMethod]
         public void AppendMethodSignature_ComplexMethodWithoutParameters()
         {
-            // arrange
-            var builder = new StringBuilder();
-            var method = typeof(AppendPropertySignatureData).GetMethod(nameof(AppendPropertySignatureData.ComplexMethodWithoutParameters));
-
-            // act
-            CakeFileIntellisenseGenerator.AppendMethodSignature(builder, method);
-
-            // assert
-            builder.ToString().Should().Be($"{CakeFileIntellisenseGenerator.AliasesModifier}System.Collections.Generic.IDictionary<Tkey, System.Collections.Generic.IList<TValue>> {nameof(AppendPropertySignatureData.ComplexMethodWithoutParameters)}<Tkey, TValue>(){CakeFileIntellisenseGenerator.ThrowNotSupportedExceptionArrowExpression}{Environment.NewLine}");
+            AppendMethodSignatureAssertHelper(
+                methodName: nameof(AppendPropertySignatureData.ComplexMethodWithoutParameters),
+                expectedReturnTypeRepresentation: "System.Collections.Generic.IDictionary<TKey, System.Collections.Generic.IList<TValue>>",
+                expectedArgumentsRepresentation: "<TKey, TValue>()");
         }
 
         [TestMethod]
         public void AppendMethodSignature_ComplexMethodWithoutParametersWithSingleParameter()
         {
-            // arrange
-            var builder = new StringBuilder();
-            var method = typeof(AppendPropertySignatureData).GetMethod(nameof(AppendPropertySignatureData.ComplexMethodWithoutParametersWithSingleParameter));
-
-            // act
-            CakeFileIntellisenseGenerator.AppendMethodSignature(builder, method);
-
-            // assert
-            builder.ToString().Should().Be($"{CakeFileIntellisenseGenerator.AliasesModifier}System.Collections.Generic.IDictionary<Tkey, System.Collections.Generic.IList<TValue>> {nameof(AppendPropertySignatureData.ComplexMethodWithoutParametersWithSingleParameter)}<Tkey, TValue>(System.String name){CakeFileIntellisenseGenerator.ThrowNotSupportedExceptionArrowExpression}{Environment.NewLine}");
+            AppendMethodSignatureAssertHelper(
+                methodName: nameof(AppendPropertySignatureData.ComplexMethodWithoutParametersWithSingleParameter),
+                expectedReturnTypeRepresentation: "System.Collections.Generic.IDictionary<TKey, System.Collections.Generic.IList<TValue>>",
+                expectedArgumentsRepresentation: "<TKey, TValue>(System.String name)");
         }
 
         [TestMethod]
         public void AppendMethodSignature_ComplexMethodWithoutParametersWithMultipleParameters()
         {
-            // arrange
-            var builder = new StringBuilder();
-            var method = typeof(AppendPropertySignatureData).GetMethod(nameof(AppendPropertySignatureData.ComplexMethodWithoutParametersWithMultipleParameters));
-
-            // act
-            CakeFileIntellisenseGenerator.AppendMethodSignature(builder, method);
-
-            // assert
-            builder.ToString().Should().Be($"{CakeFileIntellisenseGenerator.AliasesModifier}System.Collections.Generic.IDictionary<Tkey, System.Collections.Generic.IList<TValue>> {nameof(AppendPropertySignatureData.ComplexMethodWithoutParametersWithMultipleParameters)}<Tkey, TValue>(System.String name, System.Int32 age){CakeFileIntellisenseGenerator.ThrowNotSupportedExceptionArrowExpression}{Environment.NewLine}");
+            AppendMethodSignatureAssertHelper(
+                methodName: nameof(AppendPropertySignatureData.ComplexMethodWithoutParametersWithMultipleParameters),
+                expectedReturnTypeRepresentation: "System.Collections.Generic.IDictionary<TKey, System.Collections.Generic.IList<TValue>>",
+                expectedArgumentsRepresentation: "<TKey, TValue>(System.String name, System.Int32 age)");
         }
 
         [TestMethod]
         public void AppendMethodSignature_ComplexMethodWithoutParametersWithMultipleGenericParameters()
         {
+            AppendMethodSignatureAssertHelper(
+                methodName: nameof(AppendPropertySignatureData.ComplexMethodWithoutParametersWithMultipleGenericParameters),
+                expectedReturnTypeRepresentation: "System.Collections.Generic.IDictionary<TKey, System.Collections.Generic.IList<TValue>>",
+                expectedArgumentsRepresentation: "<TKey, TValue>(TKey name, TValue age)");
+        }
+
+        [TestMethod]
+        public void AppendMethodSignature_ComplexMethodWithSingleConstrait()
+        {
+            AppendMethodSignatureAssertHelper(
+                methodName: nameof(AppendPropertySignatureData.ComplexMethodWithSingleConstrait),
+                expectedReturnTypeRepresentation: "System.Collections.Generic.IDictionary<TKey, System.Collections.Generic.IList<TValue>>",
+                expectedArgumentsRepresentation: "<TKey, TValue>() where TKey : System.IComparable<TKey>");
+        }
+
+        [TestMethod]
+        public void AppendMethodSignature_ComplexMethodWitMultipleConstraitsForSameArgument()
+        {
+            AppendMethodSignatureAssertHelper(
+                methodName: nameof(AppendPropertySignatureData.ComplexMethodWitMultipleConstraitsForSameArgument),
+                expectedReturnTypeRepresentation: "System.Collections.Generic.IDictionary<TKey, System.Collections.Generic.IList<TValue>>",
+                expectedArgumentsRepresentation: "<TKey, TValue>() where TKey : Cake.IntellisenseGenerator.Core.Tests.Foo, System.IComparable<TKey>, System.IEquatable<TKey>");
+        }
+
+        [TestMethod]
+        public void AppendMethodSignature_ComplexMethodWithSingleConstraitForMultipleArguments()
+        {
+            AppendMethodSignatureAssertHelper(
+                methodName: nameof(AppendPropertySignatureData.ComplexMethodWithSingleConstraitForMultipleArguments),
+                expectedReturnTypeRepresentation: "System.Collections.Generic.IDictionary<TKey, System.Collections.Generic.IList<TValue>>",
+                expectedArgumentsRepresentation: "<TKey, TValue>() where TKey : System.IComparable<TKey> where TValue : System.IEquatable<TValue>");
+        }
+
+        [TestMethod]
+        public void AppendMethodSignature_ComplexMethodWitMultipleConstraitsForMultipleArgument()
+        {
+            AppendMethodSignatureAssertHelper(
+                methodName: nameof(AppendPropertySignatureData.ComplexMethodWitMultipleConstraitsForMultipleArgument),
+                expectedReturnTypeRepresentation: "System.Collections.Generic.IDictionary<TKey, System.Collections.Generic.IList<TValue>>",
+                expectedArgumentsRepresentation: "<TKey, TValue>() where TKey : Cake.IntellisenseGenerator.Core.Tests.Foo, System.IComparable<TKey>, System.IEquatable<TKey> where TValue : Cake.IntellisenseGenerator.Core.Tests.Foo, System.IEquatable<TValue>");
+        }
+
+        private void AppendMethodSignatureAssertHelper(string methodName, string expectedReturnTypeRepresentation, string expectedArgumentsRepresentation)
+        {
             // arrange
             var builder = new StringBuilder();
-            var method = typeof(AppendPropertySignatureData).GetMethod(nameof(AppendPropertySignatureData.ComplexMethodWithoutParametersWithMultipleGenericParameters));
+            var method = typeof(AppendPropertySignatureData).GetMethod(methodName);
 
             // act
             CakeFileIntellisenseGenerator.AppendMethodSignature(builder, method);
 
             // assert
-            builder.ToString().Should().Be($"{CakeFileIntellisenseGenerator.AliasesModifier}System.Collections.Generic.IDictionary<Tkey, System.Collections.Generic.IList<TValue>> {nameof(AppendPropertySignatureData.ComplexMethodWithoutParametersWithMultipleGenericParameters)}<Tkey, TValue>(Tkey name, TValue age){CakeFileIntellisenseGenerator.ThrowNotSupportedExceptionArrowExpression}{Environment.NewLine}");
+            builder.ToString().Should().Be($"{CakeFileIntellisenseGenerator.AliasesModifier}{expectedReturnTypeRepresentation} {methodName}{expectedArgumentsRepresentation}{CakeFileIntellisenseGenerator.ThrowNotSupportedExceptionArrowExpression}{Environment.NewLine}");
         }
     }
 
@@ -146,6 +188,15 @@ namespace Cake.IntellisenseGenerator.Core.Tests
         public static IDictionary<string, IList<int>> ComplexProperty(this ICakeContext context) => throw new Exception();
 
         [CakeMethodAlias]
+        public static void SimpleVoidMethodWithoutParameters(this ICakeContext context) => throw new Exception();
+
+        [CakeMethodAlias]
+        public static void SimpleVoidMethodWithSingleParameter(this ICakeContext context, string name) => throw new Exception();
+
+        [CakeMethodAlias]
+        public static void SimpleVoidMethodWithMultipleParameters(this ICakeContext context, string name, int age) => throw new Exception();
+
+        [CakeMethodAlias]
         public static int SimpleMethodWithoutParameters(this ICakeContext context) => throw new Exception();
 
         [CakeMethodAlias]
@@ -155,15 +206,31 @@ namespace Cake.IntellisenseGenerator.Core.Tests
         public static int SimpleMethodWithMultipleParameters(this ICakeContext context, string name, int age) => throw new Exception();
 
         [CakeMethodAlias]
-        public static IDictionary<Tkey, IList<TValue>> ComplexMethodWithoutParameters<Tkey, TValue>(this ICakeContext context) => throw new Exception();
+        public static IDictionary<TKey, IList<TValue>> ComplexMethodWithoutParameters<TKey, TValue>(this ICakeContext context) => throw new Exception();
 
         [CakeMethodAlias]
-        public static IDictionary<Tkey, IList<TValue>> ComplexMethodWithoutParametersWithSingleParameter<Tkey, TValue>(this ICakeContext context, string name) => throw new Exception();
+        public static IDictionary<TKey, IList<TValue>> ComplexMethodWithoutParametersWithSingleParameter<TKey, TValue>(this ICakeContext context, string name) => throw new Exception();
 
         [CakeMethodAlias]
-        public static IDictionary<Tkey, IList<TValue>> ComplexMethodWithoutParametersWithMultipleParameters<Tkey, TValue>(this ICakeContext context, string name, int age) => throw new Exception();
+        public static IDictionary<TKey, IList<TValue>> ComplexMethodWithoutParametersWithMultipleParameters<TKey, TValue>(this ICakeContext context, string name, int age) => throw new Exception();
 
         [CakeMethodAlias]
-        public static IDictionary<Tkey, IList<TValue>> ComplexMethodWithoutParametersWithMultipleGenericParameters<Tkey, TValue>(this ICakeContext context, Tkey name, TValue age) => throw new Exception();
+        public static IDictionary<TKey, IList<TValue>> ComplexMethodWithoutParametersWithMultipleGenericParameters<TKey, TValue>(this ICakeContext context, TKey name, TValue age) => throw new Exception();
+
+        [CakeMethodAlias]
+        public static IDictionary<TKey, IList<TValue>> ComplexMethodWithSingleConstrait<TKey, TValue>(this ICakeContext context) where TKey : IComparable<TKey> => throw new Exception();
+
+        [CakeMethodAlias]
+        public static IDictionary<TKey, IList<TValue>> ComplexMethodWitMultipleConstraitsForSameArgument<TKey, TValue>(this ICakeContext context)
+            where TKey : Foo, IComparable<TKey>, IEquatable<TKey> => throw new Exception();
+
+        [CakeMethodAlias]
+        public static IDictionary<TKey, IList<TValue>> ComplexMethodWithSingleConstraitForMultipleArguments<TKey, TValue>(this ICakeContext context)
+            where TKey : IComparable<TKey> where TValue : IEquatable<TValue> => throw new Exception();
+
+        [CakeMethodAlias]
+        public static IDictionary<TKey, IList<TValue>> ComplexMethodWitMultipleConstraitsForMultipleArgument<TKey, TValue>(this ICakeContext context)
+            where TKey : Foo, IComparable<TKey>, IEquatable<TKey> where TValue : Foo, IEquatable<TValue> => throw new Exception();
     }
+    public class Foo { }
 }

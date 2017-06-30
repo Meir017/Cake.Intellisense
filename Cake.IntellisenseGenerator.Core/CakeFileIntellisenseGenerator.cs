@@ -65,7 +65,6 @@ namespace Cake.IntellisenseGenerator.Core
             builder.Append(AliasesModifier);
 
             if (alias.ReturnType == typeof(void)) builder.Append($"void ");
-            else if (alias.ReturnType.IsGenericParameter) builder.Append($"{alias.ReturnType} ");
             else builder.Append($"{Utilities.GetTypeRepresentation(alias.ReturnType)} ");
 
             builder.Append(alias.Name);
@@ -81,7 +80,23 @@ namespace Cake.IntellisenseGenerator.Core
                 .Append("(")
                 .Append(string.Join(", ", alias.GetParameters().Skip(1)
                     .Select(parameter => $"{Utilities.GetParameterRepresentation(parameter)} {parameter.Name}")))
-                .Append(")")
+                .Append(")");
+
+            if (alias.IsGenericMethod)
+            {
+                foreach (var argument in alias.GetGenericArguments())
+                {
+                    if (!argument.GetTypeInfo().ImplementedInterfaces.Any()) continue;
+                    var contraints = argument.GetTypeInfo().ImplementedInterfaces.Select(Utilities.GetTypeRepresentation);
+                    if(argument.BaseType != typeof(object))
+                    {
+                        contraints = contraints.Prepend(Utilities.GetTypeRepresentation(argument.BaseType));
+                    }
+                    builder.Append($" where {argument.Name} : ")
+                        .Append(string.Join(", ", contraints));
+                }
+            }
+            builder
                 .Append(ThrowNotSupportedExceptionArrowExpression)
                 .AppendLine();
         }
