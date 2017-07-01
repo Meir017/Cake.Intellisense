@@ -22,7 +22,7 @@ namespace Cake.IntellisenseGenerator.Core.Tests
             CakeFileIntellisenseGenerator.AppendPropertySignature(builder, method);
 
             // assert
-            builder.ToString().Should().Be($"{CakeFileIntellisenseGenerator.AliasesModifier}System.Int32 {nameof(AppendPropertySignatureData.SimpleProperty)}{CakeFileIntellisenseGenerator.ThrowNotSupportedExceptionArrowExpression}{Environment.NewLine}");
+            builder.ToString().Should().Be($"{Constants.AliasesModifier}System.Int32 {nameof(AppendPropertySignatureData.SimpleProperty)}{Constants.ThrowNotSupportedExceptionArrowExpression}{Environment.NewLine}");
         }
 
         [TestMethod]
@@ -36,7 +36,7 @@ namespace Cake.IntellisenseGenerator.Core.Tests
             CakeFileIntellisenseGenerator.AppendPropertySignature(builder, method);
 
             // assert
-            builder.ToString().Should().Be($"{CakeFileIntellisenseGenerator.AliasesModifier}System.Collections.Generic.IDictionary<System.String, System.Collections.Generic.IList<System.Int32>> {nameof(AppendPropertySignatureData.ComplexProperty)}{CakeFileIntellisenseGenerator.ThrowNotSupportedExceptionArrowExpression}{Environment.NewLine}");
+            builder.ToString().Should().Be($"{Constants.AliasesModifier}System.Collections.Generic.IDictionary<System.String, System.Collections.Generic.IList<System.Int32>> {nameof(AppendPropertySignatureData.ComplexProperty)}{Constants.ThrowNotSupportedExceptionArrowExpression}{Environment.NewLine}");
         }
 
         [TestMethod]
@@ -176,7 +176,7 @@ namespace Cake.IntellisenseGenerator.Core.Tests
             CakeFileIntellisenseGenerator.AppendMethodSignature(builder, method);
 
             // assert
-            builder.ToString().Should().Be($"{CakeFileIntellisenseGenerator.AliasesModifier}{expectedReturnTypeRepresentation} {methodName}{expectedArgumentsRepresentation}{CakeFileIntellisenseGenerator.ThrowNotSupportedExceptionArrowExpression}{Environment.NewLine}");
+            builder.ToString().Should().Be($"{Constants.AliasesModifier}{expectedReturnTypeRepresentation} {methodName}{expectedArgumentsRepresentation}{Constants.ThrowNotSupportedExceptionArrowExpression}{Environment.NewLine}");
         }
     }
 

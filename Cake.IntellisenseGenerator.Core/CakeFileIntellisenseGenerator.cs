@@ -7,12 +7,10 @@ using System.Text;
 
 namespace Cake.IntellisenseGenerator.Core
 {
+
     public class CakeFileIntellisenseGenerator
     {
-        public static readonly string ThrowNotSupportedExceptionArrowExpression = " => throw new System.NotSupportedException();";
-        public static readonly string AliasesModifier = "\t\tprotected ";
-
-        protected virtual string CakeFileIntellisensePath => $"{nameof(CakeFileIntellisense)}.cs";
+        protected virtual string CakeFileIntellisensePath => $"{Constants.CakeFileIntellisense}.cs";
 
         public void GenereteIntellisense(string dllsDirectory)
         {
@@ -62,7 +60,7 @@ namespace Cake.IntellisenseGenerator.Core
         }
         public static void AppendMethodSignature(StringBuilder builder, MethodInfo alias)
         {
-            builder.Append(AliasesModifier);
+            builder.Append(Constants.AliasesModifier);
 
             if (alias.ReturnType == typeof(void)) builder.Append($"void ");
             else builder.Append($"{Utilities.GetTypeRepresentation(alias.ReturnType)} ");
@@ -88,7 +86,7 @@ namespace Cake.IntellisenseGenerator.Core
                 {
                     if (!argument.GetTypeInfo().ImplementedInterfaces.Any()) continue;
                     var contraints = argument.GetTypeInfo().ImplementedInterfaces.Select(Utilities.GetTypeRepresentation);
-                    if(argument.BaseType != typeof(object))
+                    if (argument.BaseType != typeof(object))
                     {
                         contraints = contraints.Prepend(Utilities.GetTypeRepresentation(argument.BaseType));
                     }
@@ -97,17 +95,17 @@ namespace Cake.IntellisenseGenerator.Core
                 }
             }
             builder
-                .Append(ThrowNotSupportedExceptionArrowExpression)
+                .Append(Constants.ThrowNotSupportedExceptionArrowExpression)
                 .AppendLine();
         }
         public static void AppendPropertySignature(StringBuilder builder, MethodInfo alias)
         {
             builder
-                .Append(AliasesModifier)
+                .Append(Constants.AliasesModifier)
                 .Append(Utilities.GetTypeRepresentation(alias.ReturnType))
                 .Append(" ")
                 .Append(alias.Name)
-                .Append(ThrowNotSupportedExceptionArrowExpression)
+                .Append(Constants.ThrowNotSupportedExceptionArrowExpression)
                 .AppendLine();
         }
 
@@ -128,7 +126,7 @@ namespace Cake.IntellisenseGenerator.Core
             builder
                 .AppendLine($"namespace {typeof(CakeFile).Namespace}")
                 .AppendLine("{")
-                .AppendLine($"\tpublic abstract partial class {nameof(CakeFileIntellisense)} : {nameof(CakeFile)}")
+                .AppendLine($"\tpublic abstract partial class {Constants.CakeFileIntellisense} : {nameof(CakeFile)}")
                 .AppendLine("\t{");
         }
         public static void AppendClassEnd(StringBuilder builder)

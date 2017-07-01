@@ -11,19 +11,13 @@ namespace Cake.IntellisenseGenerator.Core
     {
         public void ConvertCsToCake()
         {
-            string output = @"..\..\dist";
-            string[] files = Directory.GetFiles(@"..\..\", "*.cake.cs");
-
-            if (!Directory.Exists(output))
-            {
-                Directory.CreateDirectory(output);
-            }
+            string[] files = Directory.GetFiles(".", "*.cake.cs");
 
             foreach (var info in files.Select(file => new FileInfo(file)))
             {
                 string outputFilename = info.Name.Replace(".cs", string.Empty);
                 string cakeFile = ToCakeFile(File.ReadAllText(info.FullName));
-                File.WriteAllText(Path.Combine(output, outputFilename), cakeFile);
+                File.WriteAllText(outputFilename, cakeFile);
             }
         }
 
@@ -71,7 +65,7 @@ namespace Cake.IntellisenseGenerator.Core
 
             var cakeFile = classes.FirstOrDefault(@class => @class.BaseList
                 .Types.OfType<SimpleBaseTypeSyntax>()
-                .Any(type => (type.Type as IdentifierNameSyntax).Identifier.ValueText == nameof(CakeFileIntellisense)));
+                .Any(type => (type.Type as IdentifierNameSyntax).Identifier.ValueText == Constants.CakeFileIntellisense));
 
             var execute = cakeFile.Members.OfType<MethodDeclarationSyntax>()
                 .FirstOrDefault(method => method.Identifier.ValueText == nameof(CakeFile.Execute));
