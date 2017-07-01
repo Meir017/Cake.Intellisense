@@ -1,5 +1,7 @@
 ﻿using Cake.Core;
 using Cake.Core.Annotations;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -84,28 +86,7 @@ namespace Cake.IntellisenseGenerator.Core
             {
                 foreach (var argument in alias.GetGenericArguments())
                 {
-                    var constraints = argument.GetTypeInfo().ImplementedInterfaces.Select(Utilities.GetTypeRepresentation);
-                    if (argument.BaseType != typeof(object) && argument.BaseType != typeof(System.ValueType))
-                    {
-                        constraints = constraints.Prepend(Utilities.GetTypeRepresentation(argument.BaseType));
-                    }
-
-                    if (argument.GenericParameterAttributes.HasFlag(GenericParameterAttributes.NotNullableValueTypeConstraint))
-                    {
-                        constraints = constraints.Append("struct");
-                    }
-                    else
-                    {
-                        if (argument.GenericParameterAttributes.HasFlag(GenericParameterAttributes.ReferenceTypeConstraint))
-                        {
-                            constraints = constraints.Append("class");
-                        }
-
-                        if (argument.GenericParameterAttributes.HasFlag(GenericParameterAttributes.DefaultConstructorConstraint))
-                        {
-                            constraints = constraints.Append("new()");
-                        }
-                    }
+                    var constraints = GetArgumentConstraints(argument);
                     if (!constraints.Any()) continue;
 
                     builder.Append($" where {argument.Name} : {string.Join(", ", constraints)}");
@@ -115,6 +96,34 @@ namespace Cake.IntellisenseGenerator.Core
                 .Append(Constants.ThrowNotSupportedExceptionArrowExpression)
                 .AppendLine();
         }
+
+        private static IEnumerable<string> GetArgumentConstraints(Type argument)
+        {
+            var constraints = argument.GetTypeInfo().ImplementedInterfaces.Select(Utilities.GetTypeRepresentation);
+            if (argument.BaseType != typeof(object) && argument.BaseType != typeof(ValueType))
+            {
+                constraints = constraints.Prepend(Utilities.GetTypeRepresentation(argument.BaseType));
+            }
+
+            if (argument.GenericParameterAttributes.HasFlag(GenericParameterAttributes.NotNullableValueTypeConstraint))
+            {
+                return constraints.Append("struct");
+            }
+
+            if (argument.GenericParameterAttributes.HasFlag(GenericParameterAttributes.ReferenceTypeConstraint))
+            {
+                constraints = constraints.Append("class");
+            }
+
+            if (argument.GenericParameterAttributes.HasFlag(GenericParameterAttributes.DefaultConstructorConstraint))
+            {
+                constraints = constraints.Append("new()");
+            }
+
+
+            return constraints;
+        }
+
         public static void AppendPropertySignature(StringBuilder builder, MethodInfo alias)
         {
             builder
