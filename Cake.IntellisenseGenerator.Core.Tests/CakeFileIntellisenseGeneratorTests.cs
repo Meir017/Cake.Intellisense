@@ -166,6 +166,42 @@ namespace Cake.IntellisenseGenerator.Core.Tests
                 expectedArgumentsRepresentation: "<TKey, TValue>() where TKey : Cake.IntellisenseGenerator.Core.Tests.Foo, System.IComparable<TKey>, System.IEquatable<TKey> where TValue : Cake.IntellisenseGenerator.Core.Tests.Foo, System.IEquatable<TValue>");
         }
 
+        [TestMethod]
+        public void AppendMethodSignature_SimpleMethodWithNewConstraint()
+        {
+            AppendMethodSignatureAssertHelper(
+                methodName: nameof(AppendPropertySignatureData.SimpleMethodWithNewConstraint),
+                expectedReturnTypeRepresentation: "void",
+                expectedArgumentsRepresentation: "<T>() where T : new()");
+        }
+
+        [TestMethod]
+        public void AppendMethodSignature_SimpleMethodWithClassConstraint()
+        {
+            AppendMethodSignatureAssertHelper(
+                methodName: nameof(AppendPropertySignatureData.SimpleMethodWithClassConstraint),
+                expectedReturnTypeRepresentation: "void",
+                expectedArgumentsRepresentation: "<T>() where T : class");
+        }
+
+        [TestMethod]
+        public void AppendMethodSignature_SimpleMethodWithStructConstraint()
+        {
+            AppendMethodSignatureAssertHelper(
+                methodName: nameof(AppendPropertySignatureData.SimpleMethodWithStructConstraint),
+                expectedReturnTypeRepresentation: "void",
+                expectedArgumentsRepresentation: "<T>() where T : struct");
+        }
+
+        [TestMethod]
+        public void AppendMethodSignature_SimpleMethodWithClassAndNewConstraint()
+        {
+            AppendMethodSignatureAssertHelper(
+                methodName: nameof(AppendPropertySignatureData.SimpleMethodWithClassAndNewConstraint),
+                expectedReturnTypeRepresentation: "void",
+                expectedArgumentsRepresentation: "<T>() where T : class, new()");
+        }
+
         private void AppendMethodSignatureAssertHelper(string methodName, string expectedReturnTypeRepresentation, string expectedArgumentsRepresentation)
         {
             // arrange
@@ -221,16 +257,26 @@ namespace Cake.IntellisenseGenerator.Core.Tests
         public static IDictionary<TKey, IList<TValue>> ComplexMethodWithSingleConstrait<TKey, TValue>(this ICakeContext context) where TKey : IComparable<TKey> => throw new Exception();
 
         [CakeMethodAlias]
-        public static IDictionary<TKey, IList<TValue>> ComplexMethodWitMultipleConstraitsForSameArgument<TKey, TValue>(this ICakeContext context)
-            where TKey : Foo, IComparable<TKey>, IEquatable<TKey> => throw new Exception();
+        public static IDictionary<TKey, IList<TValue>> ComplexMethodWitMultipleConstraitsForSameArgument<TKey, TValue>(this ICakeContext context) where TKey : Foo, IComparable<TKey>, IEquatable<TKey> => throw new Exception();
 
         [CakeMethodAlias]
-        public static IDictionary<TKey, IList<TValue>> ComplexMethodWithSingleConstraitForMultipleArguments<TKey, TValue>(this ICakeContext context)
-            where TKey : IComparable<TKey> where TValue : IEquatable<TValue> => throw new Exception();
+        public static IDictionary<TKey, IList<TValue>> ComplexMethodWithSingleConstraitForMultipleArguments<TKey, TValue>(this ICakeContext context) where TKey : IComparable<TKey> where TValue : IEquatable<TValue> => throw new Exception();
 
         [CakeMethodAlias]
         public static IDictionary<TKey, IList<TValue>> ComplexMethodWitMultipleConstraitsForMultipleArgument<TKey, TValue>(this ICakeContext context)
             where TKey : Foo, IComparable<TKey>, IEquatable<TKey> where TValue : Foo, IEquatable<TValue> => throw new Exception();
+
+        [CakeMethodAlias]
+        public static void SimpleMethodWithNewConstraint<T>(this ICakeContext context) where T : new() => throw new Exception();
+
+        [CakeMethodAlias]
+        public static void SimpleMethodWithClassConstraint<T>(this ICakeContext context) where T : class => throw new Exception();
+
+        [CakeMethodAlias]
+        public static void SimpleMethodWithStructConstraint<T>(this ICakeContext context) where T : struct => throw new Exception();
+
+        [CakeMethodAlias]
+        public static void SimpleMethodWithClassAndNewConstraint<T>(this ICakeContext context) where T : class, new() => throw new Exception();
     }
     public class Foo { }
 }

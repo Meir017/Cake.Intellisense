@@ -84,14 +84,31 @@ namespace Cake.IntellisenseGenerator.Core
             {
                 foreach (var argument in alias.GetGenericArguments())
                 {
-                    if (!argument.GetTypeInfo().ImplementedInterfaces.Any()) continue;
-                    var contraints = argument.GetTypeInfo().ImplementedInterfaces.Select(Utilities.GetTypeRepresentation);
-                    if (argument.BaseType != typeof(object))
+                    var constraints = argument.GetTypeInfo().ImplementedInterfaces.Select(Utilities.GetTypeRepresentation);
+                    if (argument.BaseType != typeof(object) && argument.BaseType != typeof(System.ValueType))
                     {
-                        contraints = contraints.Prepend(Utilities.GetTypeRepresentation(argument.BaseType));
+                        constraints = constraints.Prepend(Utilities.GetTypeRepresentation(argument.BaseType));
                     }
-                    builder.Append($" where {argument.Name} : ")
-                        .Append(string.Join(", ", contraints));
+
+                    if (argument.GenericParameterAttributes.HasFlag(GenericParameterAttributes.NotNullableValueTypeConstraint))
+                    {
+                        constraints = constraints.Append("struct");
+                    }
+                    else
+                    {
+                        if (argument.GenericParameterAttributes.HasFlag(GenericParameterAttributes.ReferenceTypeConstraint))
+                        {
+                            constraints = constraints.Append("class");
+                        }
+
+                        if (argument.GenericParameterAttributes.HasFlag(GenericParameterAttributes.DefaultConstructorConstraint))
+                        {
+                            constraints = constraints.Append("new()");
+                        }
+                    }
+                    if (!constraints.Any()) continue;
+
+                    builder.Append($" where {argument.Name} : {string.Join(", ", constraints)}");
                 }
             }
             builder
